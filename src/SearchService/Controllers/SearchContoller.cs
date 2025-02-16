@@ -18,9 +18,9 @@ public class SearchContoller : ControllerBase
 
         query.Sort(x => x.Ascending(a => a.Make));
 
-        if (!string.IsNullOrEmpty(searchParams.SeacrhTerm))
+        if (!string.IsNullOrEmpty(searchParams.SearchTerm))
         {
-            query.Match(Search.Full, searchParams.SeacrhTerm).SortByTextScore();
+            query.Match(Search.Full, searchParams.SearchTerm).SortByTextScore();
         }
 
         query = searchParams.OrderBy switch        
