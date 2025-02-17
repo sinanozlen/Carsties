@@ -1,11 +1,11 @@
 using System;
-using MongoDB.Driver;
-using MongoDB.Entities;
 
-namespace SearchService.Model;
+namespace Contracts;
 
-public class Item : Entity
+public class AuctionCreated
 {
+public Guid Id { get; set; }
+
     public int ReservePrice { get; set; }
 
     public string Seller { get; set; }
@@ -35,9 +35,4 @@ public class Item : Entity
     public int Mileage { get; set; }
 
     public string ImageUrl { get; set; }
-
-    internal SortDefinition<Item> Descending(Func<object, object> value)
-    {
-        throw new NotImplementedException();
-    }
 }
