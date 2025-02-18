@@ -11,3 +11,6 @@ dotnet_naming_style.prefix_underscore.required_prefix = _
 
 # IDE0320: Make anonymous function static
 csharp_prefer_static_anonymous_function = true
+
+# IDE0052: Remove unread private members
+dotnet_diagnostic.IDE0052.severity = none

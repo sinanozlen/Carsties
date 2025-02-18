@@ -4,9 +4,7 @@ using MongoDB.Entities;
 using SearchService.Model;
 using SearchService.Services;
 
-
 namespace SearchService;
-
 public class DbInitializer
 {
     public static async Task InitDb(WebApplication app)
@@ -21,17 +19,26 @@ public class DbInitializer
         .Key(x => x.Color, KeyType.Text)
         .CreateAsync();
 
-
         var count = await DB.CountAsync<Item>();
 
-        using var scope = app.Services.CreateScope();
+//         using var scope = app.Services.CreateScope();
 
-        var httpClient = scope.ServiceProvider.GetRequiredService<AucitonSvcHttpClient>();
+//        var httpClient = scope.ServiceProvider.GetRequiredService<AucitonSvcHttpClient>();
+//    var items = await httpClient.GetItemsForSearchDb();
 
-        var items = await httpClient.GetItemsForSearchDb();
+//        Console.WriteLine(items.Count + " returned from the auction service");
+ 
+//        if (items.Count > 0) await DB.SaveAsync(items);     
 
-        Console.WriteLine(items.Count + " returned from the auction service");
+        if(count == 0){
+            Console.WriteLine("No data - will attepmt to seed");
+            var itemData = await File.ReadAllTextAsync("Data/auctions.json");
 
-        if (items.Count > 0) await DB.SaveAsync(items);
+         var options = new JsonSerializerOptions{PropertyNameCaseInsensitive=true};
+
+            var items = JsonSerializer.Deserialize<List<Item>>(itemData, options);
+
+           await DB.SaveAsync(items);
+       }  
     }
 }
